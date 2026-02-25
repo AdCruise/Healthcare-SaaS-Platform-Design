@@ -5,7 +5,6 @@ import {
   Building2,
   Calendar,
   Users,
-  GitBranch,
   CreditCard,
   BarChart3,
   Settings,
@@ -27,6 +26,7 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 import { Badge } from './ui/badge';
+import { useUser } from '../context/UserContext';
 
 interface DashboardLayoutProps {
   children?: ReactNode;
@@ -37,7 +37,6 @@ const navigation = [
   { name: 'Clinics', href: '/dashboard/clinics', icon: Building2 },
   { name: 'Appointments', href: '/dashboard/appointments', icon: Calendar },
   { name: 'Patients', href: '/dashboard/patients', icon: Users },
-  { name: 'Operatory Mapping', href: '/dashboard/operatory', icon: GitBranch },
   { name: 'Revenue Cycle', href: '/dashboard/revenue', icon: CreditCard },
   { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
@@ -46,6 +45,7 @@ const navigation = [
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user } = useUser();
 
   return (
     <div className="min-h-screen bg-background">
@@ -104,11 +104,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           <div className="p-4 border-t border-sidebar-border">
             <div className="flex items-center gap-3 px-3 py-2">
               <div className="h-8 w-8 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-semibold text-sm">
-                JD
+                {user.avatar}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium truncate">John Doe</div>
-                <div className="text-xs text-muted-foreground truncate">john@clinic.com</div>
+                <div className="text-sm font-medium truncate">{user.name}</div>
+                <div className="text-xs text-muted-foreground truncate">{user.email}</div>
               </div>
             </div>
           </div>
@@ -167,23 +167,27 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full">
                   <div className="h-9 w-9 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-semibold">
-                    JD
+                    {user.avatar}
                   </div>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <div className="p-2">
-                  <div className="font-medium">John Doe</div>
-                  <div className="text-xs text-muted-foreground">john@clinic.com</div>
+                  <div className="font-medium">{user.name}</div>
+                  <div className="text-xs text-muted-foreground">{user.email}</div>
                 </div>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <User className="h-4 w-4 mr-2" />
-                  Profile Settings
+                <DropdownMenuItem asChild>
+                  <Link to="/dashboard/settings" className="flex items-center cursor-pointer">
+                    <User className="h-4 w-4 mr-2" />
+                    Profile Settings
+                  </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Settings className="h-4 w-4 mr-2" />
-                  Account Settings
+                <DropdownMenuItem asChild>
+                  <Link to="/dashboard/settings" className="flex items-center cursor-pointer">
+                    <Settings className="h-4 w-4 mr-2" />
+                    Account Settings
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="text-destructive">

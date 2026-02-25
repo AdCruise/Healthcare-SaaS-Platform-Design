@@ -17,6 +17,12 @@ import { DashboardPage } from "./pages/DashboardPage";
 import { OperatoryMappingPage } from "./pages/OperatoryMappingPage";
 import { AppointmentSyncPage } from "./pages/AppointmentSyncPage";
 import { OrgSelectPage } from "./pages/OrgSelectPage";
+import { ClinicPage } from "./pages/ClinicPage";
+import { AppointmentsPage } from "./pages/AppointmentPage";
+import { PatientsPage } from "./pages/PatientPage";
+import { RevenueCyclePage } from "./pages/RevenueCyclePage";
+import { AnalyticsPage } from "./pages/AnalyticsPage";
+import { SettingsPage } from "./pages/SettingsPage";
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +62,12 @@ export const router = createBrowserRouter([
     Component: DashboardLayout,
     children: [
       { index: true, Component: DashboardPage },
+      { path: "clinics", Component: ClinicPage },
+      { path: "appointments", Component: AppointmentsPage },
+      { path: "patients", Component: PatientsPage },
+      { path: "revenue", Component: RevenueCyclePage },
+      { path: "analytics", Component: AnalyticsPage },
+      { path: "settings", Component: SettingsPage },
       { path: "operatory-mapping", Component: OperatoryMappingPage },
       { path: "sync-monitor", Component: AppointmentSyncPage },
     ],
